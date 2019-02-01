@@ -87,18 +87,37 @@ EditorScreen::EditorScreen(std::shared_ptr<PKX> pokemon, int box, int index)
         pkm->metDay(Configuration::getInstance().day());
         pkm->metMonth(Configuration::getInstance().month());
         pkm->metYear(Configuration::getInstance().year() - 2000);
+        pkm->eggDay(Configuration::getInstance().day());
+        pkm->eggMonth(Configuration::getInstance().month());
+        pkm->eggYear(Configuration::getInstance().year() - 2000);
         pkm->metLevel(1);
         if (pkm->generation() == Generation::SIX)
         {
-            ((PK6*)pkm.get())->consoleRegion(Configuration::getInstance().nationality());
+            ((PK6*)pkm.get())->consoleRegion(TitleLoader::save->consoleRegion());
             ((PK6*)pkm.get())->geoCountry(0, Configuration::getInstance().defaultCountry());
             ((PK6*)pkm.get())->geoRegion(0, Configuration::getInstance().defaultRegion());
+			((PK6*)pkm.get())->country(TitleLoader::save->country());
+			((PK6*)pkm.get())->region(TitleLoader::save->subRegion());
+			if ((TitleLoader::save->version() == 24) || (TitleLoader::save->version() == 25))
+			{
+			 ((PK6*)pkm.get())->metLocation(14);
+			 ((PK6*)pkm.get())->eggLocation(60002);
+			}
+			else if ((TitleLoader::save->version() == 26) || (TitleLoader::save->version() == 27))
+			{
+			 ((PK6*)pkm.get())->metLocation(188);
+			 ((PK6*)pkm.get())->eggLocation(60002);
+			}
         }
         else if (pkm->generation() == Generation::SEVEN)
         {
-            ((PK7*)pkm.get())->consoleRegion(Configuration::getInstance().nationality());
+            ((PK7*)pkm.get())->consoleRegion(TitleLoader::save->consoleRegion());
             ((PK7*)pkm.get())->geoCountry(0, Configuration::getInstance().defaultCountry());
             ((PK7*)pkm.get())->geoRegion(0, Configuration::getInstance().defaultRegion());
+			((PK7*)pkm.get())->country(TitleLoader::save->country());
+			((PK7*)pkm.get())->region(TitleLoader::save->subRegion());
+			((PK7*)pkm.get())->metLocation(78);
+			((PK7*)pkm.get())->eggLocation(60002);
         }
         // if (pkm->generation() == Generation::LGPE)
         // {
